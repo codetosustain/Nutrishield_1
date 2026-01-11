@@ -18,15 +18,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         btnGetStarted = findViewById(R.id.btnGetStarted);
 
-        btnGetStarted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // 🔥 OPEN SIGN UP SCREEN
-                Intent intent = new Intent(WelcomeActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
+        btnGetStarted.setOnClickListener(v -> {
+            Intent intent = new Intent(WelcomeActivity.this, AccountSetupActivity.class);
+            startActivity(intent);
         });
+
+
     }
 }
 

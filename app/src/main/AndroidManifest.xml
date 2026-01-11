@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".AccountSetupActivity"/>
         <activity
             android:name=".SignUpActivity"
             android:exported="false"/>
@@ -32,6 +32,8 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
+
 
         <!-- MAIN ACTIVITY (OPTIONAL / AUTO CREATED) -->
         <activity
