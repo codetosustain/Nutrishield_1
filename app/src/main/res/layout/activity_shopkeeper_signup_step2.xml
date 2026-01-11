@@ -2,51 +2,93 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFE6CC">
+    android:background="#FFF5EC">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:orientation="vertical">
 
-        <!-- Title -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Step 2 : Upload Image"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"/>
-
-        <!-- Image Preview -->
+        <!-- 🔥 TOP IMAGE (CORRECT PLACE) -->
         <ImageView
-            android:id="@+id/imgPreview"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:src="@drawable/img_signup_step2"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="20dp"
-            android:background="#FFFFFF"/>
+            android:scaleType="centerCrop" />
 
-        <!-- Upload Button -->
-        <Button
-            android:id="@+id/btnUploadImage"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="Upload Image"
-            android:background="#556B2F"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp"/>
+        <!-- WHITE CONTENT CARD -->
+        <LinearLayout
 
-        <!-- Next Button -->
-        <Button
-            android:id="@+id/btnNext"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="Next"
-            android:background="#8FBC8F"
-            android:textColor="#FFFFFF"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="@android:color/white">
+
+            <!-- TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← Shopkeeper"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp" />
+
+            <!-- EMAIL -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#777777" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="user@gmail.com"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginBottom="16dp" />
+
+            <!-- PASSWORD -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="#777777" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="******"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:background="@android:drawable/edit_text"
+                android:layout_marginBottom="28dp" />
+
+            <!-- NEXT BUTTON -->
+            <Button
+                android:id="@+id/btnCreateAccount"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textColor="#FFFFFF"
+                android:background="#556B2F" />
+
+            <!-- SIGN IN -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account? Sign in"
+                android:textColor="#6A7FDB"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

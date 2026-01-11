@@ -1,5 +1,7 @@
+
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.application")
+    id("com.google.gms.google-services") // ✅ MUST BE HERE
     alias(libs.plugins.google.services)
 }
 
