@@ -6,23 +6,26 @@ import android.text.InputType;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class ShopkeeperSignupStep2Activity extends AppCompatActivity {
+public class ShopkeeperSignInActivity extends AppCompatActivity {
 
-    EditText etEmail, etPassword;
-    Button btnCreateAccount;
-    boolean isPasswordVisible = false;
+    EditText etUsername, etPassword;
+    Button btnNext;
+    TextView tvSignUp;
+
+    boolean isPasswordVisible = false; // 👁 password toggle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopkeeper_signup_step2);
+        setContentView(R.layout.activity_shopkeeper_signin);
 
-        // 🔙 TOOLBAR BACK BUTTON
+        // TOOLBAR SETUP
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -33,9 +36,11 @@ public class ShopkeeperSignupStep2Activity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        etEmail = findViewById(R.id.etEmail);
+        // Bind views
+        etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        btnCreateAccount = findViewById(R.id.btnCreateAccount);
+        btnNext = findViewById(R.id.btnNext);
+        tvSignUp = findViewById(R.id.tvSignUp);
 
         // 👁 PASSWORD VISIBILITY TOGGLE
         etPassword.setOnTouchListener((v, event) -> {
@@ -64,30 +69,38 @@ public class ShopkeeperSignupStep2Activity extends AppCompatActivity {
             return false;
         });
 
-        // Receive data from Step 1
-        String shopName = getIntent().getStringExtra("shopName");
-
-        btnCreateAccount.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim();
+        // SIGN IN LOGIC
+        btnNext.setOnClickListener(v -> {
+            String username = etUsername.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            if (username.isEmpty()) {
+                etUsername.setError("Enter username");
+                return;
+            }
+
+            if (password.isEmpty()) {
+                etPassword.setError("Enter password");
                 return;
             }
 
             Toast.makeText(
                     this,
-                    "Signup Completed\nShop: " + shopName,
-                    Toast.LENGTH_LONG
+                    "Shopkeeper signed in successfully",
+                    Toast.LENGTH_SHORT
             ).show();
 
+            // TODO: Open Shopkeeper Dashboard
+        });
+
+        // GO TO SIGN UP
+        tvSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(
-                    ShopkeeperSignupStep2Activity.this,
-                    ShopkeeperSignInActivity.class
+                    ShopkeeperSignInActivity.this,
+                    ShopkeeperSignupStep1Activity.class
             );
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         });
     }
 }

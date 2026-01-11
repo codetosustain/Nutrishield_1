@@ -6,6 +6,14 @@
         <entry key="Firebase Crashlytics">
           <value>
             <InsightsFilterSettings>
+              <option name="connection">
+                <ConnectionSetting>
+                  <option name="appId" value="com.example.nutrishield_1" />
+                  <option name="mobileSdkAppId" value="1:409015946768:android:71d5703193728e68514495" />
+                  <option name="projectId" value="nutrieshield" />
+                  <option name="projectNumber" value="409015946768" />
+                </ConnectionSetting>
+              </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
               <option name="timeIntervalDays" value="THIRTY_DAYS" />
               <option name="visibilityType" value="ALL" />

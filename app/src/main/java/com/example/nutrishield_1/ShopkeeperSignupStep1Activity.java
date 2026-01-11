@@ -1,6 +1,5 @@
 package com.example.nutrishield_1;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class ShopkeeperSignupStep1Activity extends AppCompatActivity {
 
@@ -19,6 +19,18 @@ public class ShopkeeperSignupStep1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopkeeper_signup_step1);
 
+        // TOOLBAR (ADDED ONLY)
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Shopkeeper");
+        }
+
+        toolbar.setNavigationOnClickListener(v -> finish());
+
+        // EXISTING CODE (UNCHANGED)
         etShopNumber = findViewById(R.id.etShopNumber);
         etShopName = findViewById(R.id.etShopName);
         etShopAddress = findViewById(R.id.etShopAddress);

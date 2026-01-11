@@ -14,7 +14,7 @@
         android:theme="@style/Theme.NutriShield_1"
         tools:targetApi="31">
 
-        <!-- WELCOME SCREEN (FIRST SCREEN) -->
+        <!-- 🚀 LAUNCHER -->
         <activity
             android:name=".WelcomeActivity"
             android:exported="true">
@@ -23,26 +23,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccountSetupActivity"/>
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false"/>
 
-        <!-- LOGIN SCREEN -->
+        <!-- 🔐 SHOPKEEPER FLOW -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".ShopkeeperSignInActivity"
             android:exported="false" />
 
-
-
-        <!-- MAIN ACTIVITY (OPTIONAL / AUTO CREATED) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ShopkeeperSignupStep1Activity"
             android:exported="false" />
-        <activity android:name=".CustomerAuthActivity" />
-        <activity android:name=".CustomerSignInActivity" />
 
+        <activity
+            android:name=".ShopkeeperSignupStep2Activity"
+            android:exported="false" />
 
+        <!-- 👤 CUSTOMER FLOW -->
+        <activity
+            android:name=".CustomerSignInActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CustomerAuthActivity"
+            android:exported="false" />
+
+        <!-- OTHER -->
+        <activity android:name=".AccountSetupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".MainActivity" />
 
     </application>
 

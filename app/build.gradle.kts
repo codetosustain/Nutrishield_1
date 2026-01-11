@@ -1,12 +1,14 @@
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.google.services)
+    id("com.android.application")
+    id("com.google.gms.google-services") // ✅ MUST BE HERE
+
 }
 
 
 android {
     namespace = "com.example.nutrishield_1"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.nutrishield_1"
@@ -44,6 +46,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

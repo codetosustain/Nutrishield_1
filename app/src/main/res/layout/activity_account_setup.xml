@@ -1,114 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/signup_bg">
 
-    <LinearLayout
+    <!-- 🔙 BACK ARROW TOOLBAR (ADDED) -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:baselineAligned="false">
+        android:layout_height="?attr/actionBarSize"
 
-        <!-- TITLE -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
-            android:layout_marginBottom="24dp"
-            android:text="@string/sign_up"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="#000000" />
+        app:navigationIcon="@drawable/ic_arrow_back" />
 
-        <!-- USERNAME LABEL -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/username"
-            android:textColor="#555555" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <!-- USERNAME INPUT -->
-        <EditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_input"
-            android:hint="@string/enter_username"
-            android:padding="12dp"
-            android:textColor="#000000"
-            android:textColorHint="#777777"
-            android:inputType="textPersonName"
-            android:importantForAutofill="yes" />
-
-        <!-- ACCOUNT TYPE LABEL -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/type_of_account"
-            android:textColor="#555555" />
-
-        <!-- ACCOUNT TYPE SELECTION -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="30dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:baselineAligned="false">
 
-            <!-- CUSTOMER -->
+            <!-- TITLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/type_of_account"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#000000" />
+
+            <!-- ACCOUNT TYPE LABEL -->
+
+
+            <!-- ACCOUNT TYPE SELECTION -->
             <LinearLayout
-                android:id="@+id/layoutCustomer"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:background="@drawable/bg_unselected">
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/customer"
-                    android:textColor="#000000" />
+                <!-- CUSTOMER -->
+                <LinearLayout
+                    android:id="@+id/layoutCustomer"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_unselected">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/customer"
+                        android:textColor="#000000" />
+                </LinearLayout>
+
+                <!-- SHOPKEEPER -->
+                <LinearLayout
+                    android:id="@+id/layoutShopkeeper"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/bg_unselected">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shopkeeper"
+                        android:textColor="#000000" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <!-- SHOPKEEPER -->
-            <LinearLayout
-                android:id="@+id/layoutShopkeeper"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:background="@drawable/bg_unselected">
+            <!-- NEXT BUTTON -->
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="@string/next"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/bg_green_button" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/shopkeeper"
-                    android:textColor="#000000" />
-            </LinearLayout>
+
 
         </LinearLayout>
+    </ScrollView>
 
-        <!-- NEXT BUTTON -->
-        <Button
-            android:id="@+id/btnNext"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="@string/next"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/bg_green_button" />
-
-        <!-- SIGN IN -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/already_have_account"
-            android:textColor="#666666"
-            android:gravity="center" />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
