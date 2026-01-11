@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
 }
+
 
 android {
     namespace = "com.example.nutrishield_1"
