@@ -13,13 +13,11 @@ public class CustomerAuthActivity extends AppCompatActivity {
 
     EditText etEmail, etPassword;
     Button btnNext;
-    TextView tvSignIn;
+    TextView tvSignIn, tvBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Load layout
         setContentView(R.layout.activity_customer_auth);
 
         // Bind views
@@ -27,10 +25,13 @@ public class CustomerAuthActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnNext = findViewById(R.id.btnNext);
         tvSignIn = findViewById(R.id.tvSignIn);
+        tvBack = findViewById(R.id.tvBack);
 
-        // NEXT button logic (for signup flow)
+        // BACK ARROW
+        tvBack.setOnClickListener(v -> finish());
+
+        // SIGN UP FLOW (Create account)
         btnNext.setOnClickListener(v -> {
-
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
@@ -44,15 +45,16 @@ public class CustomerAuthActivity extends AppCompatActivity {
                 return;
             }
 
-            Toast.makeText(this, "Customer details saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Customer account created", Toast.LENGTH_SHORT).show();
 
-            // TODO: Navigate to Customer Dashboard or next signup step
+            // TODO: Navigate to Customer Dashboard
         });
 
-        // SIGN IN text click → Customer Sign In page
+        // SIGN IN FLOW (Already have account)
         tvSignIn.setOnClickListener(v -> {
             Intent intent = new Intent(CustomerAuthActivity.this, CustomerSignInActivity.class);
             startActivity(intent);
         });
     }
 }
+

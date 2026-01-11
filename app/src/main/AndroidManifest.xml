@@ -37,9 +37,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <activity
-            android:name=".CustomerAuthActivity"
-            android:exported="false" />
+        <activity android:name=".CustomerAuthActivity" />
+        <activity android:name=".CustomerSignInActivity" />
+
 
 
     </application>
