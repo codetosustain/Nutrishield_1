@@ -1,58 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:background="#FFFFFF">
+    android:fillViewport="true"
+    android:background="#FDE1C8">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp" />
-
-    <EditText
-        android:id="@+id/etUsername"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Username"
-        android:padding="10dp"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginBottom="20dp" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Type of Account"
-        android:layout_marginBottom="10dp" />
-
-    <RadioGroup
-        android:id="@+id/rgAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="20dp">
-
-        <RadioButton
-            android:layout_width="wrap_content"
+        <!-- WHITE CARD (CENTERED) -->
+        <LinearLayout
+            android:id="@+id/cardSignup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Customer" />
+            android:layout_centerInParent="true"
+            android:layout_margin="24dp"
+            android:background="@drawable/rounded_white"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-        <RadioButton
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Username -->
+            <TextView
+                android:text="Username"
+                android:textColor="#777777"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Enter username"
+                android:layout_marginTop="6dp"/>
+
+            <!-- Email -->
+            <TextView
+                android:layout_marginTop="16dp"
+                android:text="Email"
+                android:textColor="#777777"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Enter email"
+                android:inputType="textEmailAddress"
+                android:layout_marginTop="6dp"/>
+
+            <!-- Password -->
+            <TextView
+                android:layout_marginTop="16dp"
+                android:text="Password"
+                android:textColor="#777777"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Enter password"
+                android:inputType="textPassword"
+                android:layout_marginTop="6dp"/>
+
+            <!-- Confirm Password -->
+            <TextView
+                android:layout_marginTop="16dp"
+                android:text="Confirm Password"
+                android:textColor="#777777"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="Confirm password"
+                android:inputType="textPassword"
+                tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+
+        </LinearLayout>
+
+        <!-- NEXT BUTTON -->
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/cardSignup"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Next"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4A5D23"
+            tools:ignore="VisualLintButtonSize" />
+
+        <!-- SIGN IN OPTION -->
+        <TextView
+            android:id="@+id/tvSignIn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shopkeeper"
-            android:layout_marginStart="20dp" />
-    </RadioGroup>
+            android:layout_height="48dp"
+            android:layout_below="@id/btnNext"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Already have an account? Sign in"
+            android:textColor="#4A5D23"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"/>
 
-    <Button
-        android:id="@+id/btnNext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Next" />
-
-</LinearLayout>
+    </RelativeLayout>
+</ScrollView>
 
