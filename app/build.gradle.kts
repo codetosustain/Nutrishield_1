@@ -11,7 +11,8 @@ android {
     defaultConfig {
         applicationId = "com.example.nutrishield_1"
         minSdk = 24
-        targetSdk = 35
+        //noinspection OldTargetApi
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
