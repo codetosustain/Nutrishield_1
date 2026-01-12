@@ -42,9 +42,7 @@
             android:name=".CustomerSignInActivity"
             android:exported="false" />
 
-        <activity
-            android:name=".CustomerAuthActivity"
-            android:exported="false" />
+
 
         <!-- OTHER -->
         <activity android:name=".AccountSetupActivity" />

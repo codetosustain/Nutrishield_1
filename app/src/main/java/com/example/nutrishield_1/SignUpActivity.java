@@ -1,9 +1,13 @@
 package com.example.nutrishield_1;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,23 +20,24 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SignUpActivity extends AppCompatActivity {
 
     EditText etUsername, etEmail, etPassword, etConfirmPassword;
-    Button btnNext;
+    Button btnCreateAccount;
     TextView tvSignIn;
     ImageView btnBack;
 
     boolean isPasswordVisible = false;
-    boolean isConfirmPasswordVisible = false;
+    boolean isConfirmVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        // BIND VIEWS
         etUsername = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
-        btnNext = findViewById(R.id.btnNext);
+        btnCreateAccount = findViewById(R.id.btnCreateAccount);
         tvSignIn = findViewById(R.id.tvSignIn);
         btnBack = findViewById(R.id.btnBack);
 
@@ -41,83 +46,36 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AccountSetupActivity.class))
         );
 
-        // PASSWORD TOGGLE
-        etPassword.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP &&
-                    event.getRawX() >=
-                            (etPassword.getRight()
-                                    - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+        // PASSWORD TOGGLES
+        setupPasswordToggle(etPassword, true);
+        setupPasswordToggle(etConfirmPassword, false);
 
-                if (isPasswordVisible) {
-                    etPassword.setInputType(
-                            InputType.TYPE_CLASS_TEXT |
-                                    InputType.TYPE_TEXT_VARIATION_PASSWORD
-                    );
-                    etPassword.setTransformationMethod(
-                            PasswordTransformationMethod.getInstance()
-                    );
-                    etPassword.setCompoundDrawablesWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_eye, 0
-                    );
-                } else {
-                    etPassword.setInputType(
-                            InputType.TYPE_CLASS_TEXT |
-                                    InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                    );
-                    etPassword.setTransformationMethod(null);
-                    etPassword.setCompoundDrawablesWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_eye_off, 0
-                    );
-                }
+        // BLACK + BLUE TEXT
+        String text = "Already have an account? Sign in";
+        SpannableString span = new SpannableString(text);
 
-                isPasswordVisible = !isPasswordVisible;
-                etPassword.setSelection(etPassword.getText().length());
-                return true;
-            }
-            return false;
-        });
+        span.setSpan(
+                new ForegroundColorSpan(Color.BLACK),
+                0,
+                24,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
 
+        span.setSpan(
+                new ForegroundColorSpan(Color.parseColor("#1E88E5")),
+                25,
+                text.length(),
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
 
-        // CONFIRM PASSWORD TOGGLE
-        etConfirmPassword.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP &&
-                    event.getRawX() >=
-                            (etConfirmPassword.getRight()
-                                    - etConfirmPassword.getCompoundDrawables()[2].getBounds().width())) {
+        tvSignIn.setText(span);
 
-                if (isConfirmPasswordVisible) {
-                    etConfirmPassword.setInputType(
-                            InputType.TYPE_CLASS_TEXT |
-                                    InputType.TYPE_TEXT_VARIATION_PASSWORD
-                    );
-                    etConfirmPassword.setTransformationMethod(
-                            PasswordTransformationMethod.getInstance()
-                    );
-                    etConfirmPassword.setCompoundDrawablesWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_eye, 0
-                    );
-                } else {
-                    etConfirmPassword.setInputType(
-                            InputType.TYPE_CLASS_TEXT |
-                                    InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                    );
-                    etConfirmPassword.setTransformationMethod(null);
-                    etConfirmPassword.setCompoundDrawablesWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_eye_off, 0
-                    );
-                }
+        tvSignIn.setOnClickListener(v ->
+                startActivity(new Intent(this, CustomerSignInActivity.class))
+        );
 
-                isConfirmPasswordVisible = !isConfirmPasswordVisible;
-                etConfirmPassword.setSelection(
-                        etConfirmPassword.getText().length()
-                );
-                return true;
-            }
-            return false;
-        });
-
-        // NEXT
-        btnNext.setOnClickListener(v -> {
+        // CREATE ACCOUNT
+        btnCreateAccount.setOnClickListener(v -> {
             if (!etPassword.getText().toString()
                     .equals(etConfirmPassword.getText().toString())) {
                 Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
@@ -125,10 +83,41 @@ public class SignUpActivity extends AppCompatActivity {
             }
             Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show();
         });
+    }
 
-        // SIGN IN
-        tvSignIn.setOnClickListener(v ->
-                startActivity(new Intent(this, CustomerSignInActivity.class))
-        );
+    private void setupPasswordToggle(EditText editText, boolean main) {
+        editText.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP &&
+                    editText.getCompoundDrawables()[2] != null &&
+                    event.getRawX() >=
+                            (editText.getRight()
+                                    - editText.getCompoundDrawables()[2].getBounds().width())) {
+
+                boolean visible = main ? isPasswordVisible : isConfirmVisible;
+
+                if (visible) {
+                    editText.setInputType(
+                            InputType.TYPE_CLASS_TEXT |
+                                    InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    );
+                    editText.setTransformationMethod(
+                            PasswordTransformationMethod.getInstance()
+                    );
+                } else {
+                    editText.setInputType(
+                            InputType.TYPE_CLASS_TEXT |
+                                    InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    );
+                    editText.setTransformationMethod(null);
+                }
+
+                if (main) isPasswordVisible = !isPasswordVisible;
+                else isConfirmVisible = !isConfirmVisible;
+
+                editText.setSelection(editText.getText().length());
+                return true;
+            }
+            return false;
+        });
     }
 }

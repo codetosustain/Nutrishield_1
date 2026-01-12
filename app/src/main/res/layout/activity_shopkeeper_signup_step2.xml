@@ -4,49 +4,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF5EC">
+    android:background="#FDE1C8">
 
-    <!-- BACK ARROW TOOLBAR (ADDED) -->
+    <!-- TOOLBAR -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FFF5EC"
+        android:background="#FDE1C8"
         app:title="Shopkeeper"
         app:titleTextColor="#000000"
         app:navigationIcon="@drawable/ic_arrow_back" />
 
-    <!-- EXISTING CONTENT (UNCHANGED) -->
+    <!-- CENTER CONTENT -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:src="@drawable/img_signup_step2"
-                android:scaleType="centerCrop" />
-
+            <!-- WHITE CARD -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_white"
                 android:orientation="vertical"
-                android:padding="24dp"
-                android:background="@android:color/white">
+                android:padding="24dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shopkeeper"
-                    android:textSize="22sp"
+                    android:text="Sign Up"
+                    android:textSize="26sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="20dp" />
+                <!-- NAME -->
+                <TextView
+                    android:text="Name"
+                    android:textColor="#777777"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="Enter your name"
+                    android:inputType="textPersonName"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- EMAIL -->
                 <TextView
                     android:text="Email"
                     android:textColor="#777777"
@@ -57,12 +72,13 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:hint="user@gmail.com"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="Enter email"
                     android:inputType="textEmailAddress"
-                    android:padding="12dp"
-                    android:background="@android:drawable/edit_text"
+                    android:padding="16dp"
                     android:layout_marginBottom="16dp" />
 
+                <!-- PASSWORD -->
                 <TextView
                     android:text="Password"
                     android:textColor="#777777"
@@ -73,23 +89,57 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:hint="******"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="Enter password"
                     android:inputType="textPassword"
                     android:drawableEnd="@drawable/ic_eye"
                     android:padding="12dp"
-                    android:background="@android:drawable/edit_text"
-                    android:layout_marginBottom="28dp" />
 
+                    android:layout_marginBottom="16dp" />
+
+                <!-- CONFIRM PASSWORD -->
+                <TextView
+                    android:text="Confirm Password"
+                    android:textColor="#777777"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/etConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="Confirm password"
+                    android:inputType="textPassword"
+                    android:drawableEnd="@drawable/ic_eye"
+                    android:padding="12dp"
+
+                    android:layout_marginBottom="24dp" />
+
+                <!-- CREATE ACCOUNT -->
                 <Button
                     android:id="@+id/btnCreateAccount"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:text="Next"
+                    android:text="Create Account"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
-                    android:background="#556B2F" />
-
+                    android:textStyle="bold"
+                    android:backgroundTint="#4A5D23" />
             </LinearLayout>
+
+            <!-- SIGN IN -->
+            <TextView
+                android:id="@+id/tvSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:clickable="true"
+                android:focusable="true" />
+
         </LinearLayout>
     </ScrollView>
 

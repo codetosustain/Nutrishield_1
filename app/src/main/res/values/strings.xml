@@ -64,5 +64,10 @@
     <string name="enter_email">Enter email</string>
     <string name="enter_password">Enter password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="shopkeeper_sign_up_html">
+        <![CDATA[
+        New shopkeeper? <font color="#1E88E5">Sign up</font>
+        ]]>
+    </string>
 
 </resources>

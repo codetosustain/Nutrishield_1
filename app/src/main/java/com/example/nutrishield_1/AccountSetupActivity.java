@@ -21,36 +21,37 @@ public class AccountSetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_setup);
 
-
+        // TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false); // 🔥 THIS HIDES TITLE
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
-
-        toolbar.setNavigationOnClickListener(v -> finish());
-
+        // BIND VIEWS
         customerLayout = findViewById(R.id.layoutCustomer);
         shopkeeperLayout = findViewById(R.id.layoutShopkeeper);
         btnNext = findViewById(R.id.btnNext);
 
+        // CUSTOMER SELECT
         customerLayout.setOnClickListener(v -> {
             selectedRole = "customer";
             customerLayout.setBackgroundResource(R.drawable.bg_selected);
             shopkeeperLayout.setBackgroundResource(R.drawable.bg_unselected);
         });
 
+        // SHOPKEEPER SELECT
         shopkeeperLayout.setOnClickListener(v -> {
             selectedRole = "shopkeeper";
             shopkeeperLayout.setBackgroundResource(R.drawable.bg_selected);
             customerLayout.setBackgroundResource(R.drawable.bg_unselected);
         });
 
+        // NEXT
         btnNext.setOnClickListener(v -> {
 
             if (selectedRole.isEmpty()) {
@@ -59,14 +60,12 @@ public class AccountSetupActivity extends AppCompatActivity {
             }
 
             Intent intent;
-
             if (selectedRole.equals("customer")) {
                 intent = new Intent(this, SignUpActivity.class);
             } else {
                 intent = new Intent(this, ShopkeeperSignInActivity.class);
             }
 
-            intent.putExtra("role", selectedRole);
             startActivity(intent);
         });
     }

@@ -4,72 +4,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFE6CC">
+    android:background="#FDE1C8">
 
-    <!-- TOP TOOLBAR (ADDED ONLY) -->
+    <!-- TOOLBAR -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FFE6CC"
+        android:background="#FDE1C8"
         app:title="Shopkeeper"
         app:titleTextColor="#000000"
         app:navigationIcon="@drawable/ic_arrow_back" />
 
-    <!-- EXISTING CONTENT (UNCHANGED) -->
+    <!-- CONTENT -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:gravity="center"
             android:padding="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- WHITE CARD -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginBottom="24dp" />
+                android:background="@drawable/rounded_white"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-            <EditText
-                android:id="@+id/etShopName"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="Shop Name"
-                android:inputType="text"
-                android:layout_marginBottom="16dp"
-                android:background="@android:drawable/edit_text" />
+                <!-- TITLE -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign Up"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:layout_marginBottom="20dp" />
 
-            <EditText
-                android:id="@+id/etShopNumber"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="Shop Number"
-                android:inputType="text"
-                android:layout_marginBottom="16dp"
-                android:background="@android:drawable/edit_text" />
+                <!-- SHOP NAME -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shop Name"
+                    android:textColor="#777777" />
 
-            <EditText
-                android:id="@+id/etShopAddress"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="Shop Address"
-                android:inputType="textPostalAddress"
-                android:layout_marginBottom="32dp"
-                android:background="@android:drawable/edit_text" />
+                <EditText
+                    android:id="@+id/etShopName"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="Enter shop name"
+                    android:padding="12dp"
+                    android:layout_marginBottom="16dp" />
 
-            <Button
-                android:id="@+id/btnNext"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Next"
-                android:textColor="#FFFFFF"
-                android:background="#556B2F" />
+                <!-- SHOP ADDRESS -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shop Address"
+                    android:textColor="#777777" />
+
+                <EditText
+                    android:id="@+id/etShopAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="Enter shop address"
+                    android:padding="12dp"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- NEXT BUTTON -->
+                <Button
+                    android:id="@+id/btnNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Next"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:backgroundTint="#4A5D23" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
