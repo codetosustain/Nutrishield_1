@@ -13,43 +13,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriShield_1"
         tools:targetApi="31">
-
-        <!-- 🚀 LAUNCHER -->
+        <activity
+            android:name=".ShopkeeperProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShopkeeperHomeActivity"
+            android:exported="false" /> <!-- 🚀 LAUNCHER -->
         <activity
             android:name=".WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 🔐 SHOPKEEPER FLOW -->
+        </activity> <!-- 🔐 SHOPKEEPER FLOW -->
         <activity
             android:name=".ShopkeeperSignInActivity"
             android:exported="false" />
-
         <activity
             android:name=".ShopkeeperSignupStep1Activity"
             android:exported="false" />
-
         <activity
             android:name=".ShopkeeperSignupStep2Activity"
-            android:exported="false" />
-
-        <!-- 👤 CUSTOMER FLOW -->
+            android:exported="false" /> <!-- 👤 CUSTOMER FLOW -->
         <activity
             android:name=".CustomerSignInActivity"
-            android:exported="false" />
-
-
-
-        <!-- OTHER -->
+            android:exported="false" /> <!-- OTHER -->
         <activity android:name=".AccountSetupActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
-
     </application>
 
 </manifest>

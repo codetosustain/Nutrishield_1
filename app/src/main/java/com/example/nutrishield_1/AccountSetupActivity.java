@@ -21,7 +21,7 @@ public class AccountSetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_setup);
 
-        // TOOLBAR
+        // 🔹 TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -32,41 +32,56 @@ public class AccountSetupActivity extends AppCompatActivity {
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        // BIND VIEWS
+        // 🔹 BIND VIEWS
         customerLayout = findViewById(R.id.layoutCustomer);
         shopkeeperLayout = findViewById(R.id.layoutShopkeeper);
         btnNext = findViewById(R.id.btnNext);
 
-        // CUSTOMER SELECT
+        // 🔹 CUSTOMER SELECT
         customerLayout.setOnClickListener(v -> {
             selectedRole = "customer";
             customerLayout.setBackgroundResource(R.drawable.bg_selected);
             shopkeeperLayout.setBackgroundResource(R.drawable.bg_unselected);
         });
 
-        // SHOPKEEPER SELECT
+        // 🔹 SHOPKEEPER SELECT
         shopkeeperLayout.setOnClickListener(v -> {
             selectedRole = "shopkeeper";
             shopkeeperLayout.setBackgroundResource(R.drawable.bg_selected);
             customerLayout.setBackgroundResource(R.drawable.bg_unselected);
         });
 
-        // NEXT
         btnNext.setOnClickListener(v -> {
 
             if (selectedRole.isEmpty()) {
-                Toast.makeText(this, "Select account type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        this,
+                        "Select account type",
+                        Toast.LENGTH_SHORT
+                ).show();
                 return;
             }
 
             Intent intent;
-            if (selectedRole.equals("customer")) {
-                intent = new Intent(this, SignUpActivity.class);
+
+            if ("customer".equals(selectedRole)) {
+                // 👤 CUSTOMER FLOW
+                intent = new Intent(
+                        AccountSetupActivity.this,
+                        SignUpActivity.class   // or CustomerSignupActivity
+                );
+
             } else {
-                intent = new Intent(this, ShopkeeperSignInActivity.class);
+                // 🏪 SHOPKEEPER FLOW
+                intent = new Intent(
+                        AccountSetupActivity.this,
+                        ShopkeeperSignupStep1Activity.class
+                );
             }
 
+            intent.putExtra("role", selectedRole);
             startActivity(intent);
         });
+
     }
 }
