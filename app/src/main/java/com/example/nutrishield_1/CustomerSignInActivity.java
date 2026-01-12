@@ -19,18 +19,18 @@ import androidx.appcompat.widget.Toolbar;
 
 public class CustomerSignInActivity extends AppCompatActivity {
 
-    EditText etUsername, etPassword;
-    Button btnNext;
-    TextView tvSignUp;
+    private EditText etEmail, etPassword;
+    private Button btnSignIn;
+    private TextView tvSignUp;
 
-    boolean isPasswordVisible = false;
+    private boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_signin);
 
-        // TOOLBAR
+        // 🔧 TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -39,28 +39,29 @@ public class CustomerSignInActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        // VIEWS
-        etUsername = findViewById(R.id.etUsername);
+        // 🔗 BIND VIEWS
+        etEmail = findViewById(R.id.etUsername); // email field
         etPassword = findViewById(R.id.etPassword);
-        btnNext = findViewById(R.id.btnNext);
+        btnSignIn = findViewById(R.id.btnNext);
         tvSignUp = findViewById(R.id.tvSignUp);
 
-        // COLORED TEXT (NO XML HTML)
+        // 🎨 "Don't have an account? Sign Up"
         String text = "Don't have an account? Sign Up";
-        SpannableString spannable = new SpannableString(text);
-        spannable.setSpan(
+        SpannableString span = new SpannableString(text);
+
+        span.setSpan(
                 new ForegroundColorSpan(Color.BLACK),
                 0, 22,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         );
-        spannable.setSpan(
+        span.setSpan(
                 new ForegroundColorSpan(Color.parseColor("#1E88E5")),
                 23, text.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         );
-        tvSignUp.setText(spannable);
+        tvSignUp.setText(span);
 
-        // 👁 PASSWORD TOGGLE
+        // 👁 PASSWORD VISIBILITY TOGGLE
         etPassword.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP &&
                     etPassword.getCompoundDrawables()[2] != null &&
@@ -76,18 +77,12 @@ public class CustomerSignInActivity extends AppCompatActivity {
                     etPassword.setTransformationMethod(
                             PasswordTransformationMethod.getInstance()
                     );
-                    etPassword.setCompoundDrawablesWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_eye, 0
-                    );
                 } else {
                     etPassword.setInputType(
                             InputType.TYPE_CLASS_TEXT |
                                     InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                     );
                     etPassword.setTransformationMethod(null);
-                    etPassword.setCompoundDrawablesWithIntrinsicBounds(
-                            0, 0, R.drawable.ic_eye_off, 0
-                    );
                 }
 
                 isPasswordVisible = !isPasswordVisible;
@@ -97,21 +92,30 @@ public class CustomerSignInActivity extends AppCompatActivity {
             return false;
         });
 
-        // SIGN IN
-        btnNext.setOnClickListener(v -> {
-            if (etUsername.getText().toString().trim().isEmpty()) {
-                etUsername.setError("Enter email");
+        // 🔐 SIGN IN BUTTON
+        btnSignIn.setOnClickListener(v -> {
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
+
+            if (email.isEmpty()) {
+                etEmail.setError("Enter email");
                 return;
             }
-            if (etPassword.getText().toString().trim().isEmpty()) {
+
+            if (password.isEmpty()) {
                 etPassword.setError("Enter password");
                 return;
             }
 
-            Toast.makeText(this, "Customer signed in successfully", Toast.LENGTH_SHORT).show();
+            // ✅ SUCCESS (replace with Firebase later)
+            Toast.makeText(this, "Signed in successfully", Toast.LENGTH_SHORT).show();
+
+            // 🚀 OPEN SCANNER PAGE
+            startActivity(new Intent(this, ScannerActivity.class));
+            finish();
         });
 
-        // GO TO SIGN UP
+        // ➕ GO TO SIGN UP
         tvSignUp.setOnClickListener(v ->
                 startActivity(new Intent(this, SignUpActivity.class))
         );

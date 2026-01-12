@@ -19,20 +19,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText etUsername, etEmail, etPassword, etConfirmPassword;
-    Button btnCreateAccount;
-    TextView tvSignIn;
-    ImageView btnBack;
+    private EditText etUsername, etEmail, etPassword, etConfirmPassword;
+    private Button btnCreateAccount;
+    private TextView tvSignIn;
+    private ImageView btnBack;
 
-    boolean isPasswordVisible = false;
-    boolean isConfirmVisible = false;
+    private boolean isPasswordVisible = false;
+    private boolean isConfirmVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        // BIND VIEWS
+        // 🔗 Bind Views
         etUsername = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -41,51 +41,80 @@ public class SignUpActivity extends AppCompatActivity {
         tvSignIn = findViewById(R.id.tvSignIn);
         btnBack = findViewById(R.id.btnBack);
 
-        // BACK
-        btnBack.setOnClickListener(v ->
-                startActivity(new Intent(this, AccountSetupActivity.class))
-        );
+        // ⬅ Back Button
+        btnBack.setOnClickListener(v -> {
+            finish(); // return to AccountSetupActivity
+        });
 
-        // PASSWORD TOGGLES
+        // 👁 Password visibility toggle
         setupPasswordToggle(etPassword, true);
         setupPasswordToggle(etConfirmPassword, false);
 
-        // BLACK + BLUE TEXT
+        // 🎨 "Already have an account? Sign in" styling
         String text = "Already have an account? Sign in";
         SpannableString span = new SpannableString(text);
 
         span.setSpan(
                 new ForegroundColorSpan(Color.BLACK),
                 0,
-                24,
+                25,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         );
 
         span.setSpan(
                 new ForegroundColorSpan(Color.parseColor("#1E88E5")),
-                25,
+                26,
                 text.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         );
 
         tvSignIn.setText(span);
 
+        // 👉 Open Sign In page
         tvSignIn.setOnClickListener(v ->
-                startActivity(new Intent(this, CustomerSignInActivity.class))
+                startActivity(new Intent(SignUpActivity.this, CustomerSignInActivity.class))
         );
 
-        // CREATE ACCOUNT
+        // ✅ Create Account Button
         btnCreateAccount.setOnClickListener(v -> {
-            if (!etPassword.getText().toString()
-                    .equals(etConfirmPassword.getText().toString())) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            String username = etUsername.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
+            String confirmPassword = etConfirmPassword.getText().toString().trim();
+
+            // 🔎 Validation
+            if (username.isEmpty()) {
+                etUsername.setError("Username required");
                 return;
             }
+
+            if (email.isEmpty()) {
+                etEmail.setError("Email required");
+                return;
+            }
+
+            if (password.isEmpty()) {
+                etPassword.setError("Password required");
+                return;
+            }
+
+            if (!password.equals(confirmPassword)) {
+                etConfirmPassword.setError("Passwords do not match");
+                return;
+            }
+
+            // ✅ SUCCESS (Later replace with Firebase Auth)
             Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show();
+
+            // 🚀 Go to Scanner Page
+            Intent intent = new Intent(SignUpActivity.this, ScannerActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
-    private void setupPasswordToggle(EditText editText, boolean main) {
+    // 👁 Password Toggle Logic
+    private void setupPasswordToggle(EditText editText, boolean isMainPassword) {
         editText.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP &&
                     editText.getCompoundDrawables()[2] != null &&
@@ -93,9 +122,9 @@ public class SignUpActivity extends AppCompatActivity {
                             (editText.getRight()
                                     - editText.getCompoundDrawables()[2].getBounds().width())) {
 
-                boolean visible = main ? isPasswordVisible : isConfirmVisible;
+                boolean isVisible = isMainPassword ? isPasswordVisible : isConfirmVisible;
 
-                if (visible) {
+                if (isVisible) {
                     editText.setInputType(
                             InputType.TYPE_CLASS_TEXT |
                                     InputType.TYPE_TEXT_VARIATION_PASSWORD
@@ -111,8 +140,11 @@ public class SignUpActivity extends AppCompatActivity {
                     editText.setTransformationMethod(null);
                 }
 
-                if (main) isPasswordVisible = !isPasswordVisible;
-                else isConfirmVisible = !isConfirmVisible;
+                if (isMainPassword) {
+                    isPasswordVisible = !isPasswordVisible;
+                } else {
+                    isConfirmVisible = !isConfirmVisible;
+                }
 
                 editText.setSelection(editText.getText().length());
                 return true;
