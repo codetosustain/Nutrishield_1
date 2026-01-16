@@ -7,45 +7,44 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-    <!-- TITLE -->
+    <!-- 🔍 TITLE -->
     <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Analysis Result"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="#3E2723"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <!-- PROGRESS BAR -->
+    <!-- 📊 PROGRESS BAR -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="250dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:max="100"
         android:progress="0" />
 
-    <!-- PERCENT TEXT -->
+    <!-- 📈 PERCENTAGE TEXT -->
     <TextView
         android:id="@+id/txtPercent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="0%"
         android:textSize="18sp"
         android:textColor="#444444"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <!-- FINAL RESULT -->
+    <!-- ✅ RESULT TEXT -->
     <TextView
         android:id="@+id/txtResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Result"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#2E7D32"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

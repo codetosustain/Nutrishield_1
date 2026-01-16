@@ -15,7 +15,17 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite
+
+
+
+
+
+
+
+
+
+        .Interpreter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
