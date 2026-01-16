@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
+                android:baselineAligned="false"
                 android:layout_marginBottom="30dp">
 
                 <!-- CUSTOMER -->
@@ -78,13 +79,16 @@
             </LinearLayout>
 
             <!-- NEXT BUTTON -->
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:text="@string/next"
-                android:textColor="#FFFFFF"
-                android:background="@drawable/bg_green_button" />
+                android:textColor="#FAFAFA"
+                android:background="@drawable/bg_green_button"
+                android:backgroundTint="@null"/>
+
+
 
         </LinearLayout>
     </ScrollView>

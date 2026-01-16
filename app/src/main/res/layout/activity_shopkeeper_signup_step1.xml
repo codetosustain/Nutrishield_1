@@ -89,6 +89,20 @@
                     android:textStyle="bold"
                     android:backgroundTint="#4A5D23" />
 
+                <!-- ALREADY LOGGED IN -->
+                <TextView
+                    android:id="@+id/tvSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Already logged in? Sign in"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E88E5"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
             </LinearLayout>
 
         </LinearLayout>

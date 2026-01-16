@@ -14,6 +14,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class ShopkeeperSignInActivity extends AppCompatActivity {
 
     EditText etUsername, etPassword;
@@ -22,12 +25,19 @@ public class ShopkeeperSignInActivity extends AppCompatActivity {
 
     boolean isPasswordVisible = false;
 
+    FirebaseAuth auth;
+    FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopkeeper_signin);
 
-        // TOOLBAR
+        // 🔹 FIREBASE
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // 🔹 TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -35,13 +45,13 @@ public class ShopkeeperSignInActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        // VIEWS
+        // 🔹 VIEWS
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnNext = findViewById(R.id.btnNext);
         tvSignUp = findViewById(R.id.tvSignUp);
 
-        // ✅ SET COLORED TEXT SAFELY
+        // 🔹 COLORED TEXT
         tvSignUp.setText(
                 Html.fromHtml(
                         getString(R.string.shopkeeper_sign_up_html),
@@ -52,9 +62,11 @@ public class ShopkeeperSignInActivity extends AppCompatActivity {
         // 👁 PASSWORD TOGGLE
         etPassword.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP &&
+                    etPassword.getCompoundDrawables()[2] != null &&
                     event.getRawX() >=
                             (etPassword.getRight()
-                                    - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+                                    - etPassword.getCompoundDrawables()[2]
+                                    .getBounds().width())) {
 
                 if (isPasswordVisible) {
                     etPassword.setInputType(
@@ -85,21 +97,10 @@ public class ShopkeeperSignInActivity extends AppCompatActivity {
             return false;
         });
 
-        // SIGN IN
-        btnNext.setOnClickListener(v -> {
-            if (etUsername.getText().toString().isEmpty()) {
-                etUsername.setError("Enter email");
-                return;
-            }
-            if (etPassword.getText().toString().isEmpty()) {
-                etPassword.setError("Enter password");
-                return;
-            }
+        // 🔥 SIGN IN
+        btnNext.setOnClickListener(v -> loginShopkeeper());
 
-            Toast.makeText(this, "Shopkeeper signed in", Toast.LENGTH_SHORT).show();
-        });
-
-        // SIGN UP CLICK
+        // 🔹 SIGN UP
         tvSignUp.setOnClickListener(v ->
                 startActivity(
                         new Intent(
@@ -109,4 +110,69 @@ public class ShopkeeperSignInActivity extends AppCompatActivity {
                 )
         );
     }
+
+    private void loginShopkeeper() {
+
+        String email = etUsername.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            etUsername.setError("Enter email");
+            return;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Enter password");
+            return;
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+
+                    String uid = auth.getCurrentUser().getUid();
+
+                    // 🔥 CHECK SHOP IN shops COLLECTION
+                    db.collection("shops")
+                            .whereEqualTo("ownerUid", uid)
+                            .get()
+                            .addOnSuccessListener(query -> {
+
+                                if (query.isEmpty()) {
+                                    auth.signOut();
+                                    Toast.makeText(
+                                            this,
+                                            "No shop found for this account",
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                    return;
+                                }
+
+                                // ✅ SHOPKEEPER VERIFIED
+                                Toast.makeText(
+                                        this,
+                                        "Welcome Shopkeeper!",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                Intent intent = new Intent(
+                                        ShopkeeperSignInActivity.this,
+                                        ShopkeeperHomeActivity.class
+                                );
+                                intent.setFlags(
+                                        Intent.FLAG_ACTIVITY_NEW_TASK |
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                );
+                                startActivity(intent);
+                                finish();
+                            });
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(
+                                this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show()
+                );
+    }
+
 }

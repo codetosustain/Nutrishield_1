@@ -42,7 +42,6 @@
             android:name=".CustomerSignInActivity"
             android:exported="false" />
 
-        <activity android:name=".ScannerActivity" />
 
 
         <!-- OTHER -->
@@ -50,10 +49,6 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".FreshnessActivity"
-            tools:ignore="Instantiatable" />
-        <activity android:name=".OrganicityActivity" />
-        <activity android:name=".OrganicityResultActivity" />
 
     </application>
 

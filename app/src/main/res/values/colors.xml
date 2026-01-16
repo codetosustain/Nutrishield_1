@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="bg_main">#FDE3C7</color>
+    <color name="drawer_bg">#E28A72</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_dark">#3A2A1E</color>
+    <color name="green_dark">#4F5D2F</color>
+
+    <color name="logout_bg">#FFFFFF</color>
+    <color name="logout_text">#E28A72</color>
 </resources>
