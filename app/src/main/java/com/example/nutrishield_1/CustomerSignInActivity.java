@@ -17,6 +17,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class CustomerSignInActivity extends AppCompatActivity {
 
     EditText etUsername, etPassword;
@@ -25,12 +28,19 @@ public class CustomerSignInActivity extends AppCompatActivity {
 
     boolean isPasswordVisible = false;
 
+    FirebaseAuth auth;
+    FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_signin);
 
-        // TOOLBAR
+        // 🔹 FIREBASE
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // 🔹 TOOLBAR
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -39,13 +49,13 @@ public class CustomerSignInActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        // VIEWS
+        // 🔹 VIEWS
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnNext = findViewById(R.id.btnNext);
         tvSignUp = findViewById(R.id.tvSignUp);
 
-        // COLORED TEXT (NO XML HTML)
+        // 🔹 COLORED TEXT
         String text = "Don't have an account? Sign Up";
         SpannableString spannable = new SpannableString(text);
         spannable.setSpan(
@@ -66,7 +76,8 @@ public class CustomerSignInActivity extends AppCompatActivity {
                     etPassword.getCompoundDrawables()[2] != null &&
                     event.getRawX() >=
                             (etPassword.getRight()
-                                    - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+                                    - etPassword.getCompoundDrawables()[2]
+                                    .getBounds().width())) {
 
                 if (isPasswordVisible) {
                     etPassword.setInputType(
@@ -97,23 +108,78 @@ public class CustomerSignInActivity extends AppCompatActivity {
             return false;
         });
 
-        // SIGN IN
-        btnNext.setOnClickListener(v -> {
-            if (etUsername.getText().toString().trim().isEmpty()) {
-                etUsername.setError("Enter email");
-                return;
-            }
-            if (etPassword.getText().toString().trim().isEmpty()) {
-                etPassword.setError("Enter password");
-                return;
-            }
+        // 🔥 SIGN IN
+        btnNext.setOnClickListener(v -> loginCustomer());
 
-            Toast.makeText(this, "Customer signed in successfully", Toast.LENGTH_SHORT).show();
-        });
-
-        // GO TO SIGN UP
+        // 🔹 GO TO SIGN UP
         tvSignUp.setOnClickListener(v ->
                 startActivity(new Intent(this, SignUpActivity.class))
         );
+    }
+
+    private void loginCustomer() {
+
+        String email = etUsername.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            etUsername.setError("Enter email");
+            return;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Enter password");
+            return;
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+
+                    String uid = auth.getCurrentUser().getUid();
+
+                    // 🔥 CHECK USER ROLE IN users COLLECTION
+                    db.collection("users")
+                            .document(uid)
+                            .get()
+                            .addOnSuccessListener(document -> {
+
+                                if (!document.exists()) {
+                                    auth.signOut();
+                                    Toast.makeText(
+                                            this,
+                                            "User record not found",
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                    return;
+                                }
+
+                                String role = document.getString("role");
+
+                                if (!"customer".equals(role)) {
+                                    auth.signOut();
+                                    Toast.makeText(
+                                            this,
+                                            "Not a customer account",
+                                            Toast.LENGTH_LONG
+                                    ).show();
+                                    return;
+                                }
+
+                                // ✅ CUSTOMER VERIFIED
+                                Toast.makeText(
+                                        this,
+                                        "Welcome Customer!",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                                finish();
+                            });
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(
+                                this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show()
+                );
     }
 }

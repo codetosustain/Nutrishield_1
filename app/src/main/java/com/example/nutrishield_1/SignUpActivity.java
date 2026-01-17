@@ -17,6 +17,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignUpActivity extends AppCompatActivity {
 
     EditText etUsername, etEmail, etPassword, etConfirmPassword;
@@ -27,12 +33,19 @@ public class SignUpActivity extends AppCompatActivity {
     boolean isPasswordVisible = false;
     boolean isConfirmVisible = false;
 
+    FirebaseAuth auth;
+    FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        // BIND VIEWS
+        // 🔹 FIREBASE
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // 🔹 VIEWS
         etUsername = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -41,16 +54,16 @@ public class SignUpActivity extends AppCompatActivity {
         tvSignIn = findViewById(R.id.tvSignIn);
         btnBack = findViewById(R.id.btnBack);
 
-        // BACK
+        // 🔹 BACK
         btnBack.setOnClickListener(v ->
                 startActivity(new Intent(this, AccountSetupActivity.class))
         );
 
-        // PASSWORD TOGGLES
+        // 👁 PASSWORD TOGGLES
         setupPasswordToggle(etPassword, true);
         setupPasswordToggle(etConfirmPassword, false);
 
-        // BLACK + BLUE TEXT
+        // 🔹 COLORED TEXT
         String text = "Already have an account? Sign in";
         SpannableString span = new SpannableString(text);
 
@@ -74,15 +87,80 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(new Intent(this, CustomerSignInActivity.class))
         );
 
-        // CREATE ACCOUNT
-        btnCreateAccount.setOnClickListener(v -> {
-            if (!etPassword.getText().toString()
-                    .equals(etConfirmPassword.getText().toString())) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show();
-        });
+        // 🔥 SIGN UP
+        btnCreateAccount.setOnClickListener(v -> createAccount());
+    }
+
+    private void createAccount() {
+
+        String username = etUsername.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        String confirm = etConfirmPassword.getText().toString().trim();
+
+        if (username.isEmpty()) {
+            etUsername.setError("Enter username");
+            return;
+        }
+
+        if (email.isEmpty()) {
+            etEmail.setError("Enter email");
+            return;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Enter password");
+            return;
+        }
+
+        if (!password.equals(confirm)) {
+            etConfirmPassword.setError("Passwords do not match");
+            return;
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+
+                    String uid = auth.getCurrentUser().getUid();
+
+                    // 🔥 CREATE USER DOCUMENT IN FIRESTORE
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("username", username);
+                    user.put("email", email);
+                    user.put("role", "customer");
+                    user.put("createdAt", System.currentTimeMillis());
+
+                    db.collection("users")
+                            .document(uid)
+                            .set(user)
+                            .addOnSuccessListener(unused -> {
+
+                                Toast.makeText(
+                                        this,
+                                        "Account created successfully",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                startActivity(
+                                        new Intent(this, CustomerSignInActivity.class)
+                                );
+                                finish();
+                            })
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(
+                                            this,
+                                            e.getMessage(),
+                                            Toast.LENGTH_SHORT
+                                    ).show()
+                            );
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(
+                                this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show()
+                );
     }
 
     private void setupPasswordToggle(EditText editText, boolean main) {
@@ -91,7 +169,8 @@ public class SignUpActivity extends AppCompatActivity {
                     editText.getCompoundDrawables()[2] != null &&
                     event.getRawX() >=
                             (editText.getRight()
-                                    - editText.getCompoundDrawables()[2].getBounds().width())) {
+                                    - editText.getCompoundDrawables()[2]
+                                    .getBounds().width())) {
 
                 boolean visible = main ? isPasswordVisible : isConfirmVisible;
 
